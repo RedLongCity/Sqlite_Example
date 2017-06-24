@@ -1,23 +1,34 @@
 package com.smitsworks.redlo.sqlite_example.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 /**
  * Created by redlongcity on 19.06.2017.
  */
 
-@DatabaseTable
-class Country implements Serializable {
+@DatabaseTable(tableName = "Countries")
+public class Country implements Serializable {
 
     private static final long serialVersionUID = -6582623980712135028L;
 
-    @DatabaseField(generatedId = true)
+    public static final String COLUMN_ID = "idCountries";
+    public static final String TITLE = "title";
+
+    @DatabaseField(generatedId = true, columnName = COLUMN_ID)
     private Integer id;
 
-    @DatabaseField
+    @DatabaseField(columnName = TITLE, width = 64)
     private String title;
+
+    @ForeignCollectionField
+    private Collection<City> cities;
+
+    public Country() {
+    }
 
     public Integer getId() {
         return id;
@@ -33,6 +44,14 @@ class Country implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Collection<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(Collection<City> cities) {
+        this.cities = cities;
     }
 
     @Override
