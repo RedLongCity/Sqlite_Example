@@ -11,6 +11,6 @@ import java.sql.SQLException;
 
 public class DataBaseConfigUtil extends OrmLiteConfigUtil {
     public static void main(String[] args) throws IOException, SQLException{
-        writeConfigFile("ormlite_config.txt");
+        writeConfigFile("ormlite_config.txt");//save to raw/ormlite_config.txt
     }
 }
