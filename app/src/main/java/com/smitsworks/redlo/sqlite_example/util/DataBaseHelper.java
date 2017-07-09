@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import com.smitsworks.redlo.sqlite_example.model.CitiesHasCountries;
 import com.smitsworks.redlo.sqlite_example.model.City;
 import com.smitsworks.redlo.sqlite_example.model.Country;
 
@@ -27,8 +28,11 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<City, Integer> CityDao = null;
     private RuntimeExceptionDao<City, Integer> CityRuntimeDao = null;
 
-    public DataBaseHelper(Context context, String databaseName, SQLiteDatabase.CursorFactory factory, int databaseVersion) {
-        super(context, databaseName, factory, databaseVersion);
+    private Dao<CitiesHasCountries, Integer> CitiesHasCountriesDao = null;
+    private RuntimeExceptionDao<CitiesHasCountries, Integer> CitiesHasCountriesRuntimeDao = null;
+
+    public DataBaseHelper(Context context) {
+        super(context, databaseName,null, databaseVersion);
     }
 
     @Override
@@ -36,6 +40,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         try{
             TableUtils.createTable(connectionSource,Country.class);
             TableUtils.createTable(connectionSource,City.class);
+            TableUtils.createTable(connectionSource, CitiesHasCountries.class);
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -48,6 +53,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         try{
             TableUtils.dropTable(connectionSource, Country.class, true);
             TableUtils.dropTable(connectionSource, City.class, true);
+            TableUtils.dropTable(connectionSource, CitiesHasCountries.class, true);
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -57,32 +63,24 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         return CountryDao;
     }
 
-    public void setCountryDao(Dao<Country, Integer> countryDao) {
-        CountryDao = countryDao;
-    }
-
     public RuntimeExceptionDao<Country, Integer> getCountryRuntimeDao() {
         return CountryRuntimeDao;
-    }
-
-    public void setCountryRuntimeDao(RuntimeExceptionDao<Country, Integer> countryRuntimeDao) {
-        CountryRuntimeDao = countryRuntimeDao;
     }
 
     public Dao<City, Integer> getCityDao() {
         return CityDao;
     }
 
-    public void setCityDao(Dao<City, Integer> cityDao) {
-        CityDao = cityDao;
-    }
-
     public RuntimeExceptionDao<City, Integer> getCityRuntimeDao() {
         return CityRuntimeDao;
     }
 
-    public void setCityRuntimeDao(RuntimeExceptionDao<City, Integer> cityRuntimeDao) {
-        CityRuntimeDao = cityRuntimeDao;
+    public Dao<CitiesHasCountries, Integer> getCitiesHasCountriesDao() {
+        return CitiesHasCountriesDao;
+    }
+
+    public RuntimeExceptionDao<CitiesHasCountries, Integer> getCitiesHasCountriesRuntimeDao() {
+        return CitiesHasCountriesRuntimeDao;
     }
 
     @Override
@@ -92,5 +90,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         CountryRuntimeDao = null;
         CityDao = null;
         CityRuntimeDao = null;
+        CitiesHasCountriesDao = null;
+        CitiesHasCountriesRuntimeDao = null;
     }
 }

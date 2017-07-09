@@ -24,9 +24,6 @@ public class Country implements Serializable {
     @DatabaseField(columnName = TITLE, width = 64)
     private String title;
 
-    @ForeignCollectionField
-    private Collection<City> cities;
-
     public Country() {
     }
 
@@ -44,14 +41,6 @@ public class Country implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Collection<City> getCities() {
-        return cities;
-    }
-
-    public void setCities(Collection<City> cities) {
-        this.cities = cities;
     }
 
     @Override
