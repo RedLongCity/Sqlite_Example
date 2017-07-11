@@ -2,6 +2,7 @@ package com.smitsworks.redlo.sqlite_example.facades;
 
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.SelectArg;
 import com.smitsworks.redlo.sqlite_example.dao.CitiesHasCountriesDao;
 import com.smitsworks.redlo.sqlite_example.model.CitiesHasCountries;
 import com.smitsworks.redlo.sqlite_example.model.City;
@@ -20,7 +21,7 @@ public class CitiesHasCountriesFacadeSingleton {
     private City city;
     private Country country;
     private DataBaseHelper dataBaseHelper;
-    private CitiesHasCountries citiesHasCountries;
+    private CitiesHasCountriesDao citiesHasCountriesDao;
 
     private static final CitiesHasCountriesFacadeSingleton ourInstance = new CitiesHasCountriesFacadeSingleton();
 
@@ -37,15 +38,18 @@ public class CitiesHasCountriesFacadeSingleton {
 
     }
 
-    private void daoCitiesHasCountries(int id) throws SQLException {
-        citiesHasCountries = dataBaseHelper.getCitiesHasCountriesDao().queryForId(id);
+    private void daoCitiesHasCountries() throws SQLException {
+        citiesHasCountriesDao = (CitiesHasCountriesDao) dataBaseHelper.getCitiesHasCountriesDao();//!!!
     }
 
-    public CitiesHasCountries getCitiesHasCountries() {
-        return citiesHasCountries;
+    public CitiesHasCountriesDao getCitiesHasCountriesDao() {
+        return citiesHasCountriesDao;
     }
 
     private PreparedQuery<City> makeCitiesForCountriesQuery() throws SQLException{
-        QueryBuilder<CitiesHasCountries, Integer> citiesHasCountriesQb =
+        QueryBuilder<CitiesHasCountries, Integer> citiesHasCountriesQb = citiesHasCountriesDao.queryBuilder();
+        citiesHasCountriesQb.selectColumns(CitiesHasCountries.CITIES_ID_FIELD_NAME);
+        SelectArg citiesSelectArg = new SelectArg();
+
     }
 }
