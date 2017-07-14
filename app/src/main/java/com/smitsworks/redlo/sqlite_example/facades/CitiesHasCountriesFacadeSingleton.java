@@ -3,7 +3,6 @@ package com.smitsworks.redlo.sqlite_example.facades;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
-import com.smitsworks.redlo.sqlite_example.dao.CitiesHasCountriesDao;
 import com.smitsworks.redlo.sqlite_example.model.CitiesHasCountries;
 import com.smitsworks.redlo.sqlite_example.model.City;
 import com.smitsworks.redlo.sqlite_example.model.Country;
@@ -42,24 +41,33 @@ public class CitiesHasCountriesFacadeSingleton {
         if(citiesForCountriesQuery==null){
             citiesForCountriesQuery = makeCitiesForCountriesQuery();
         }
+        citiesForCountriesQuery.setArgumentHolderValue(0,country);
+        return dataBaseHelper.getCityDao().query(citiesForCountriesQuery);
     }
 
     private List<Country> lookupCountriesForCities(City city) throws SQLException{
         if(countriesForCitiesQuerry==null){
-            countriesForCitiesQuerry = makeCoutriesForCitiesQuerry();
+            countriesForCitiesQuerry = makeCountriesForCitiesQuery();
         }
+    }
+
+    private PreparedQuery<Country> makeCountriesForCitiesQuery() throws SQLException{
+        QueryBuilder<CitiesHasCountries, Integer> citiesHasCountriesQb = dataBaseHelper.getCitiesHasCountriesDao().queryBuilder();
+        citiesHasCountriesQb.selectColumns(CitiesHasCountries.COUNTRIES_ID_FIELD_NAME);
+        SelectArg citiesSelectArg = new SelectArg();
+        citiesHasCountriesQb.where().eq(CitiesHasCountries.CITIES_ID_FIELD_NAME, citiesSelectArg);
+        QueryBuilder<Country,Integer> coutryQb = dataBaseHelper.getCountryDao().queryBuilder();
+        coutryQb.where().in(Country.COLUMN_ID, citiesHasCountriesQb);
+        return coutryQb.prepare();
     }
 
     private PreparedQuery<City> makeCitiesForCountriesQuery() throws SQLException{
         QueryBuilder<CitiesHasCountries, Integer> citiesHasCountriesQb = dataBaseHelper.getCitiesHasCountriesDao().queryBuilder();
-        citiesHasCountriesQb.selectColumns(CitiesHasCountries.CITIES_ID_FIELD_NAME);
-        SelectArg citiesSelectArg = new SelectArg();
-        citiesHasCountriesQb.where().eq(CitiesHasCountries.CITIES_ID_FIELD_NAME, citiesSelectArg);
-        QueryBuilder<Country,Integer> coutryQb = dataBaseHelper.getCountryDao().queryBuilder();
-        coutryQb.where().in(Country.COLUMN_ID, )
-    }
-
-    private PreparedQuery<Country> makeCoutriesForCitiesQuerry() throws SQLException{
-
+        citiesHasCountriesQb.selectColumns(CitiesHasCountries.COUNTRIES_ID_FIELD_NAME);
+        SelectArg countriesSelectArg = new SelectArg();
+        citiesHasCountriesQb.where().eq(CitiesHasCountries.CITIES_ID_FIELD_NAME, countriesSelectArg);
+        QueryBuilder<City,Integer> citiesQb = dataBaseHelper.getCityDao().queryBuilder();
+        citiesQb.where().in(City.COLUMN_ID, citiesHasCountriesQb);
+        return citiesQb.prepare();
     }
 }
