@@ -11,6 +11,7 @@ import com.smitsworks.redlo.sqlite_example.util.DataBaseHelper;
 import com.smitsworks.redlo.sqlite_example.util.MyApp;
 
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created by redlongcity on 09.07.2017.
@@ -18,10 +19,9 @@ import java.sql.SQLException;
 
 public class CitiesHasCountriesFacadeSingleton {
 
-    private City city;
-    private Country country;
     private DataBaseHelper dataBaseHelper;
-    private CitiesHasCountriesDao citiesHasCountriesDao;
+    private PreparedQuery<City> citiesForCountriesQuery;
+    private PreparedQuery<Country> countriesForCitiesQuerry;
 
     private static final CitiesHasCountriesFacadeSingleton ourInstance = new CitiesHasCountriesFacadeSingleton();
 
@@ -38,18 +38,28 @@ public class CitiesHasCountriesFacadeSingleton {
 
     }
 
-    private void daoCitiesHasCountries() throws SQLException {
-        citiesHasCountriesDao = (CitiesHasCountriesDao) dataBaseHelper.getCitiesHasCountriesDao();//!!!
+    private List<City> lookupCitiesForCoutries(Country country) throws SQLException {
+        if(citiesForCountriesQuery==null){
+            citiesForCountriesQuery = makeCitiesForCountriesQuery();
+        }
     }
 
-    public CitiesHasCountriesDao getCitiesHasCountriesDao() {
-        return citiesHasCountriesDao;
+    private List<Country> lookupCountriesForCities(City city) throws SQLException{
+        if(countriesForCitiesQuerry==null){
+            countriesForCitiesQuerry = makeCoutriesForCitiesQuerry();
+        }
     }
 
     private PreparedQuery<City> makeCitiesForCountriesQuery() throws SQLException{
-        QueryBuilder<CitiesHasCountries, Integer> citiesHasCountriesQb = citiesHasCountriesDao.queryBuilder();
+        QueryBuilder<CitiesHasCountries, Integer> citiesHasCountriesQb = dataBaseHelper.getCitiesHasCountriesDao().queryBuilder();
         citiesHasCountriesQb.selectColumns(CitiesHasCountries.CITIES_ID_FIELD_NAME);
         SelectArg citiesSelectArg = new SelectArg();
+        citiesHasCountriesQb.where().eq(CitiesHasCountries.CITIES_ID_FIELD_NAME, citiesSelectArg);
+        QueryBuilder<Country,Integer> coutryQb = dataBaseHelper.getCountryDao().queryBuilder();
+        coutryQb.where().in(Country.COLUMN_ID, )
+    }
+
+    private PreparedQuery<Country> makeCoutriesForCitiesQuerry() throws SQLException{
 
     }
 }
