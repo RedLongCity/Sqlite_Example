@@ -49,6 +49,8 @@ public class CitiesHasCountriesFacadeSingleton {
         if(countriesForCitiesQuerry==null){
             countriesForCitiesQuerry = makeCountriesForCitiesQuery();
         }
+        countriesForCitiesQuerry.setArgumentHolderValue(0,city);
+        return dataBaseHelper.getCountryDao().query(countriesForCitiesQuerry);
     }
 
     private PreparedQuery<Country> makeCountriesForCitiesQuery() throws SQLException{
@@ -63,9 +65,9 @@ public class CitiesHasCountriesFacadeSingleton {
 
     private PreparedQuery<City> makeCitiesForCountriesQuery() throws SQLException{
         QueryBuilder<CitiesHasCountries, Integer> citiesHasCountriesQb = dataBaseHelper.getCitiesHasCountriesDao().queryBuilder();
-        citiesHasCountriesQb.selectColumns(CitiesHasCountries.COUNTRIES_ID_FIELD_NAME);
-        SelectArg countriesSelectArg = new SelectArg();
-        citiesHasCountriesQb.where().eq(CitiesHasCountries.CITIES_ID_FIELD_NAME, countriesSelectArg);
+        citiesHasCountriesQb.selectColumns(CitiesHasCountries.CITIES_ID_FIELD_NAME);
+        SelectArg countiesSelectArg = new SelectArg();
+        citiesHasCountriesQb.where().eq(CitiesHasCountries.COUNTRIES_ID_FIELD_NAME, countiesSelectArg);
         QueryBuilder<City,Integer> citiesQb = dataBaseHelper.getCityDao().queryBuilder();
         citiesQb.where().in(City.COLUMN_ID, citiesHasCountriesQb);
         return citiesQb.prepare();
