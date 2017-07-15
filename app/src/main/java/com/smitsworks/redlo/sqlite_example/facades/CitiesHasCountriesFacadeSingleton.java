@@ -1,5 +1,8 @@
 package com.smitsworks.redlo.sqlite_example.facades;
 
+import android.support.v4.util.LogWriter;
+
+import com.j256.ormlite.logger.Log;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
@@ -9,7 +12,9 @@ import com.smitsworks.redlo.sqlite_example.model.Country;
 import com.smitsworks.redlo.sqlite_example.util.DataBaseHelper;
 import com.smitsworks.redlo.sqlite_example.util.MyApp;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -34,7 +39,28 @@ public class CitiesHasCountriesFacadeSingleton {
 
     private CitiesHasCountriesFacadeSingleton(){
         dataBaseHelper = new DataBaseHelper(MyApp.getContext());
+    }
 
+    public void persisitData(List<City> citiesList, List<Country> countriesList) throws SQLException, IOException {
+        if(citiesList.isEmpty()||countriesList.isEmpty()){
+            LogWriter logWriter = new LogWriter("Persist Error");
+            logWriter.write("citiesList or countriesList is empty");
+            return;
+        }
+        Iterator<City> cityIterator = citiesList.iterator();
+        while(cityIterator.hasNext()){
+            City city = new City();
+            city.setTitle(cityIterator.next().getTitle());
+            Iterator<Country> countriesIterator = countriesList.iterator();
+            while(countriesIterator.hasNext()){
+                Country country = new Country();
+                country.setTitle(countriesIterator.next().getTitle());
+                CitiesHasCountries citiesHasCountries = new CitiesHasCountries(city,country);
+                dataBaseHelper.getCityDao().create(city);
+                dataBaseHelper.getCountryDao().create(country);
+                dataBaseHelper.getCitiesHasCountriesDao().create(citiesHasCountries);
+            }
+        }
     }
 
     private List<City> lookupCitiesForCoutries(Country country) throws SQLException {

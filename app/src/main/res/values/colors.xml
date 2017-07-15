@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="button">#aa3939</color>
     <color name="txButton">#000000</color>
+    <color name="greenButton">#105c21</color>
+    <color name="greenTxColor">#dbf5e1</color>
 </resources>

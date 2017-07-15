@@ -8,7 +8,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/city" />
-
+    <TextView
+        android:id="@+id/tvCities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <EditText
         android:id="@+id/txCity"
         android:layout_width="match_parent"
@@ -16,12 +20,23 @@
         android:background="@color/colorPrimaryDark"
         android:textColor="@color/colorAccent"
         />
-
+    <Button
+        android:id="@+id/buttonAddCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/button"
+        android:textColor="@color/txButton"
+        android:text="@string/addCity"
+        android:onClick="addCity"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/country"/>
-
+    <TextView
+        android:id="@+id/tvCountries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <EditText
         android:id="@+id/txCountry"
         android:layout_width="match_parent"
@@ -35,14 +50,23 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/buttonAddCountry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/button"
             android:textColor="@color/txButton"
             android:text="@string/add"
-            android:onClick="addStufs"/>
+            android:onClick="addCoutry"/>
 
     </LinearLayout>
+    <Button
+        android:id="@+id/butSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/greenButton"
+        android:textColor="@color/greenTxColor"
+        android:text="@string/save"
+        android:onClick="saveData"/>
 
     <TextView
         android:id="@+id/txArea"
