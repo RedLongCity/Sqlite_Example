@@ -29,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText cityText;
     private EditText countryText;
     private TextView textArea;
-    private Button addCity;
-    private Button addCountry;
-    private Button saveData;
+
 
 
     @Override
@@ -44,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
         cityText = (EditText) findViewById(R.id.txCity);
         countryText = (EditText) findViewById(R.id.txCountry);
         textArea = (TextView) findViewById(R.id.txArea);
-        addCity = (Button) findViewById(R.id.buttonAddCity);
-        addCountry = (Button) findViewById(R.id.buttonAddCountry);
-        saveData = (Button) findViewById(R.id.butSave);
-
 
     }
 
@@ -93,7 +87,19 @@ public class MainActivity extends AppCompatActivity {
         cHcFC.persisitData(citiesList,countryList);
     }
 
-    private void showData(View v){
-
+    private void showData() throws SQLException {
+        String toAreaStr = new String();
+        List<Country> countryList = cHcFC.getAllCountries();
+        List<City> citiesList;
+        for(Country country:countryList){
+            citiesList = cHcFC.lookupCitiesForCoutries(country);
+            if(citiesList!=null) {
+                toAreaStr.concat(country.getTitle() + " [" + citiesList.toString()+" ]");
+            }else{
+                toAreaStr.concat(country.getTitle() + " [" + citiesList.toString()+" ]");
+            }
+            toAreaStr.concat("\n");
+        }
+        textArea.setText(toAreaStr);
     }
 }

@@ -2,7 +2,6 @@ package com.smitsworks.redlo.sqlite_example.facades;
 
 import android.support.v4.util.LogWriter;
 
-import com.j256.ormlite.logger.Log;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.SelectArg;
@@ -63,7 +62,15 @@ public class CitiesHasCountriesFacadeSingleton {
         }
     }
 
-    private List<City> lookupCitiesForCoutries(Country country) throws SQLException {
+    public List<Country> getAllCountries() throws SQLException {
+        return dataBaseHelper.getCountryDao().queryForAll();
+    }
+
+    public List<City> getAllCities() throws SQLException{
+        return dataBaseHelper.getCityDao().queryForAll();
+    }
+
+    public List<City> lookupCitiesForCoutries(Country country) throws SQLException {
         if(citiesForCountriesQuery==null){
             citiesForCountriesQuery = makeCitiesForCountriesQuery();
         }
@@ -71,7 +78,7 @@ public class CitiesHasCountriesFacadeSingleton {
         return dataBaseHelper.getCityDao().query(citiesForCountriesQuery);
     }
 
-    private List<Country> lookupCountriesForCities(City city) throws SQLException{
+    public List<Country> lookupCountriesForCities(City city) throws SQLException{
         if(countriesForCitiesQuerry==null){
             countriesForCitiesQuerry = makeCountriesForCitiesQuery();
         }
