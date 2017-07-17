@@ -41,6 +41,16 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource,Country.class);
             TableUtils.createTable(connectionSource,City.class);
             TableUtils.createTable(connectionSource, CitiesHasCountries.class);
+
+            Country country = new Country();
+            country.setTitle("England");
+            City city = new City();
+            city.setTitle("London");
+            CitiesHasCountries citiesHasCountries = new CitiesHasCountries(city,country);
+            getCountryDao().create(country);
+            getCityDao().create(city);
+            getCitiesHasCountriesDao().create(citiesHasCountries);
+
         }catch(SQLException e){
             e.printStackTrace();
         }

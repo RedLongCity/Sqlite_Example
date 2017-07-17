@@ -56,7 +56,7 @@
             android:background="@color/button"
             android:textColor="@color/txButton"
             android:text="@string/add"
-            android:onClick="addCoutry"/>
+            android:onClick="addCountry"/>
 
     </LinearLayout>
     <Button
@@ -67,6 +67,15 @@
         android:textColor="@color/greenTxColor"
         android:text="@string/save"
         android:onClick="saveData"/>
+
+    <Button
+        android:id="@+id/butShow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/greenButton"
+        android:textColor="@color/greenTxColor"
+        android:text="@string/show"
+        android:onClick="showData"/>
 
     <TextView
         android:id="@+id/txArea"

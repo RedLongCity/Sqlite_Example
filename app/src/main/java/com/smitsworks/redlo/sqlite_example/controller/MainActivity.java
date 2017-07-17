@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText cityText;
     private EditText countryText;
     private TextView textArea;
+    private TextView cityArea;
+    private TextView countryArea;
 
 
 
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         cityText = (EditText) findViewById(R.id.txCity);
         countryText = (EditText) findViewById(R.id.txCountry);
         textArea = (TextView) findViewById(R.id.txArea);
+        cityArea = (TextView) findViewById(R.id.tvCities);
+        countryArea = (TextView) findViewById(R.id.tvCountries);
 
     }
 
@@ -51,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addCity(View v) throws IOException {
-        if(citiesList.isEmpty()){
+        if(citiesList==null){
             citiesList = new ArrayList<>();
         }
         if(cityText.getText().length()==0){
@@ -62,10 +66,11 @@ public class MainActivity extends AppCompatActivity {
         City city = new City();
         city.setTitle(cityText.getText().toString());
         citiesList.add(city);
+        cityArea.setText(citiesList.toString());
     }
 
     public void addCountry(View v) throws IOException {
-        if(countryList.isEmpty()){
+        if(countryList==null){
             countryList = new ArrayList<>();
         }
         if(countryText.getText().length()==0){
@@ -76,18 +81,24 @@ public class MainActivity extends AppCompatActivity {
         Country country = new Country();
         country.setTitle(countryText.getText().toString());
         countryList.add(country);
+        countryArea.setText(countryList.toString());
     }
 
     public void saveData(View v) throws IOException, SQLException {
-        if(countryList.isEmpty()||citiesList.isEmpty()){
+        if(countryList==null||citiesList==null){
             LogWriter logwriter = new LogWriter("Persist Data Error");
             logwriter.write("Countries or Cities List is empty");
             return;
         }
         cHcFC.persisitData(citiesList,countryList);
+        showTables();
     }
 
-    private void showData() throws SQLException {
+    public void showData(View v) throws SQLException {
+        showTables();
+    }
+
+    private void showTables() throws SQLException {
         String toAreaStr = new String();
         List<Country> countryList = cHcFC.getAllCountries();
         List<City> citiesList;
