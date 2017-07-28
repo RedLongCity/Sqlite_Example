@@ -3,6 +3,7 @@ package com.smitsworks.redlo.sqlite_example.controller;
 import android.support.v4.util.LogWriter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -95,7 +96,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showData(View v) throws SQLException {
+        Log.i("ShowData", "show data");
         showTables();
+    }
+
+    public void log(View v){
+        Log.i("Log", "Log from button");
     }
 
     private void showTables() throws SQLException {
@@ -112,5 +118,6 @@ public class MainActivity extends AppCompatActivity {
             toAreaStr.concat("\n");
         }
         textArea.setText(toAreaStr);
+        Log.i("DataBase content",toAreaStr.toString());
     }
 }

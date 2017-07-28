@@ -1,6 +1,7 @@
 package com.smitsworks.redlo.sqlite_example.facades;
 
 import android.support.v4.util.LogWriter;
+import android.util.Log;
 
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -38,6 +39,22 @@ public class CitiesHasCountriesFacadeSingleton {
 
     private CitiesHasCountriesFacadeSingleton(){
         dataBaseHelper = new DataBaseHelper(MyApp.getContext());
+        try{
+
+            Country country = new Country();
+            country.setTitle("England");
+            City city = new City();
+            city.setTitle("London");
+            CitiesHasCountries citiesHasCountries = new CitiesHasCountries(city,country);
+            dataBaseHelper.getCountryDao().create(country);
+            dataBaseHelper.getCityDao().create(city);
+            dataBaseHelper.getCitiesHasCountriesDao().create(citiesHasCountries);
+            Log.d("DataBase test",dataBaseHelper.getCountryDao().queryForAll().toString());
+            Log.d("DataBase test",dataBaseHelper.getCityDao().queryForAll().toString());
+            Log.d("DataBase test",dataBaseHelper.getCitiesHasCountriesDao().queryForAll().toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void persisitData(List<City> citiesList, List<Country> countriesList) throws SQLException, IOException {

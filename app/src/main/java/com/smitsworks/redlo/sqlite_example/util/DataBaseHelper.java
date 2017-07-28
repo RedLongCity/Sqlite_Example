@@ -2,6 +2,7 @@ package com.smitsworks.redlo.sqlite_example.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -32,12 +33,13 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     private RuntimeExceptionDao<CitiesHasCountries, Integer> CitiesHasCountriesRuntimeDao = null;
 
     public DataBaseHelper(Context context) {
-        super(context, databaseName,null, databaseVersion);
+        super(context, databaseName, null, databaseVersion);
     }
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try{
+            Log.i(DataBaseHelper.class.getName(), "onCreate");
             TableUtils.createTable(connectionSource,Country.class);
             TableUtils.createTable(connectionSource,City.class);
             TableUtils.createTable(connectionSource, CitiesHasCountries.class);
@@ -50,8 +52,12 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
             getCountryDao().create(country);
             getCityDao().create(city);
             getCitiesHasCountriesDao().create(citiesHasCountries);
+            Log.d("DataBase test",getCountryDao().queryForAll().toString());
+            Log.d("DataBase test",getCityDao().queryForAll().toString());
+            Log.d("DataBase test",getCitiesHasCountriesDao().queryForAll().toString());
 
         }catch(SQLException e){
+            Log.e(DataBaseHelper.class.getName(), "Can't create database", e);
             e.printStackTrace();
         }
     }
@@ -61,35 +67,49 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try{
+            Log.i(DataBaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, Country.class, true);
             TableUtils.dropTable(connectionSource, City.class, true);
             TableUtils.dropTable(connectionSource, CitiesHasCountries.class, true);
         }catch(SQLException e){
+            Log.e(DataBaseHelper.class.getName(), "Can't drop databases", e);
             e.printStackTrace();
         }
     }
 
-    public Dao<Country, Integer> getCountryDao() {
+    public Dao<Country, Integer> getCountryDao() throws SQLException {
+        if(CountryDao==null)
+            CountryDao = getDao(Country.class);
         return CountryDao;
     }
 
-    public RuntimeExceptionDao<Country, Integer> getCountryRuntimeDao() {
+    public RuntimeExceptionDao<Country, Integer> getCountryRuntimeDao() throws SQLException {
+        if(CountryRuntimeDao==null)
+            CountryRuntimeDao = getRuntimeExceptionDao(Country.class);
         return CountryRuntimeDao;
     }
 
-    public Dao<City, Integer> getCityDao() {
+    public Dao<City, Integer> getCityDao() throws SQLException {
+        if(CityDao==null)
+            CityDao = getDao(City.class);
         return CityDao;
     }
 
-    public RuntimeExceptionDao<City, Integer> getCityRuntimeDao() {
+    public RuntimeExceptionDao<City, Integer> getCityRuntimeDao() throws SQLException {
+        if(CityRuntimeDao==null)
+            CityRuntimeDao = getRuntimeExceptionDao(City.class);
         return CityRuntimeDao;
     }
 
-    public Dao<CitiesHasCountries, Integer> getCitiesHasCountriesDao() {
+    public Dao<CitiesHasCountries, Integer> getCitiesHasCountriesDao() throws SQLException{
+        if(CitiesHasCountriesDao ==null)
+            CitiesHasCountriesDao = getDao(CitiesHasCountries.class);
         return CitiesHasCountriesDao;
     }
 
-    public RuntimeExceptionDao<CitiesHasCountries, Integer> getCitiesHasCountriesRuntimeDao() {
+    public RuntimeExceptionDao<CitiesHasCountries, Integer> getCitiesHasCountriesRuntimeDao() throws SQLException {
+        if(CitiesHasCountriesRuntimeDao==null)
+            CitiesHasCountriesRuntimeDao = getRuntimeExceptionDao(CitiesHasCountries.class);
         return CitiesHasCountriesRuntimeDao;
     }
 
