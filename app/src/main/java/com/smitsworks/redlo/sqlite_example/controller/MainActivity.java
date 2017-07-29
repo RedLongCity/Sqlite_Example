@@ -24,7 +24,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    CitiesHasCountriesFacadeSingleton cHcFC;
+    private CitiesHasCountriesFacadeSingleton cHcFC;
     private List<Country> countryList;
     private List<City> citiesList;
     private EditText cityText;
@@ -92,12 +92,17 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         cHcFC.persisitData(citiesList,countryList);
+        Log.i("SavedData", "saveData: "+cHcFC.getAllCities().toString());
+        Log.i("SavedData", "saveData: "+cHcFC.getAllCountries().toString());
         showTables();
     }
 
     public void showData(View v) throws SQLException {
         Log.i("ShowData", "show data");
+        Log.i("ShowData", "showData: "+cHcFC.getAllCities().toString());
+        Log.i("ShowData", "showData: "+cHcFC.getAllCountries().toString());
         showTables();
+
     }
 
     public void log(View v){
@@ -105,19 +110,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showTables() throws SQLException {
-        String toAreaStr = new String();
+        String toAreaStr = "Output";
+        toAreaStr=toAreaStr.concat(" : ");
         List<Country> countryList = cHcFC.getAllCountries();
-        List<City> citiesList;
+        List<City> cityList;
         for(Country country:countryList){
-            citiesList = cHcFC.lookupCitiesForCoutries(country);
-            if(citiesList!=null) {
-                toAreaStr.concat(country.getTitle() + " [" + citiesList.toString()+" ]");
+            cityList = cHcFC.lookupCitiesForCoutries(country);
+            if(cityList!=null) {
+                toAreaStr=toAreaStr.concat(country.getTitle() + " [" + cityList.toString()+" ]");
             }else{
-                toAreaStr.concat(country.getTitle() + " [" + citiesList.toString()+" ]");
+                toAreaStr="DataBase is Empty";
             }
-            toAreaStr.concat("\n");
+            toAreaStr=toAreaStr.concat("\n");
         }
         textArea.setText(toAreaStr);
         Log.i("DataBase content",toAreaStr.toString());
+    }
+
+    public void clear(View view) throws SQLException {
+        cHcFC.clearAllTables();
+        Log.i("Cleaning", "currentData: "+cHcFC.getAllCities().toString());
+        Log.i("Cleaning", "currentData: "+cHcFC.getAllCountries().toString());
     }
 }

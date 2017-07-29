@@ -113,6 +113,18 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
         return CitiesHasCountriesRuntimeDao;
     }
 
+    public void clearCountryTable() throws SQLException {
+        TableUtils.clearTable(connectionSource,Country.class);
+    }
+
+    public void clearCityTable() throws SQLException {
+        TableUtils.clearTable(connectionSource,City.class);
+    }
+
+    public void clearCitiesHasCountriesTable() throws SQLException {
+        TableUtils.clearTable(connectionSource,CitiesHasCountries.class);
+    }
+
     @Override
     public void close() {
         super.close();

@@ -90,8 +90,8 @@
             android:background="@color/greenButton"
             android:textColor="@color/greenTxColor"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:text="@string/log"
-            android:onClick="log"/>
+            android:text="@string/Clear"
+            android:onClick="clear"/>
 </LinearLayout>
 
     <TextView

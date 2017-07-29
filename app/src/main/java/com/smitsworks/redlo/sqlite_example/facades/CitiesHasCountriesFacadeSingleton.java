@@ -103,6 +103,12 @@ public class CitiesHasCountriesFacadeSingleton {
         return dataBaseHelper.getCountryDao().query(countriesForCitiesQuerry);
     }
 
+    public void clearAllTables() throws SQLException {
+        dataBaseHelper.clearCityTable();
+        dataBaseHelper.clearCountryTable();
+        dataBaseHelper.clearCitiesHasCountriesTable();
+    }
+
     private PreparedQuery<Country> makeCountriesForCitiesQuery() throws SQLException{
         QueryBuilder<CitiesHasCountries, Integer> citiesHasCountriesQb = dataBaseHelper.getCitiesHasCountriesDao().queryBuilder();
         citiesHasCountriesQb.selectColumns(CitiesHasCountries.COUNTRIES_ID_FIELD_NAME);
