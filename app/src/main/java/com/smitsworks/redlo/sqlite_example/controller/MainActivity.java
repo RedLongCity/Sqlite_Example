@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
         cHcFC = CitiesHasCountriesFacadeSingleton.getOurInstance();
 
-        cityText = (EditText) findViewById(R.id.txCity);
-        countryText = (EditText) findViewById(R.id.txCountry);
-        textArea = (TextView) findViewById(R.id.txArea);
-        cityArea = (TextView) findViewById(R.id.tvCities);
-        countryArea = (TextView) findViewById(R.id.tvCountries);
+//        cityText = (EditText) findViewById(R.id.txCity);
+//        countryText = (EditText) findViewById(R.id.txCountry);
+//        textArea = (TextView) findViewById(R.id.txArea);
+//        cityArea = (TextView) findViewById(R.id.tvCities);
+//        countryArea = (TextView) findViewById(R.id.tvCountries);
 
     }
 
