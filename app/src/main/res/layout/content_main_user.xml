@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="com.smitsworks.redlo.sqlite_example.controller.MainActivity"
+    tools:showIn="@layout/app_bar_main_user">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -13,14 +13,28 @@
         android:orientation="vertical"
         android:weightSum="1">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/button"
+            android:text="content main"/>
+
         <ListView
+            android:id="@+id/listCountries"
             android:layout_width="wrap_content"
             android:layout_height="370dp"
+            android:layout_marginTop="12dp"
             android:layout_weight="0.88"
             android:background="#efefef">
             
         </ListView>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/button"
+            android:text="content main"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -1,52 +1,69 @@
 package com.smitsworks.redlo.sqlite_example.controller;
 
-import android.support.v4.util.LogWriter;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.smitsworks.redlo.sqlite_example.R;
 import com.smitsworks.redlo.sqlite_example.facades.CitiesHasCountriesFacadeSingleton;
-import com.smitsworks.redlo.sqlite_example.model.City;
 import com.smitsworks.redlo.sqlite_example.model.Country;
-import com.smitsworks.redlo.sqlite_example.util.DataBaseHelper;
+import com.smitsworks.redlo.sqlite_example.util.CountryAdapter;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private CitiesHasCountriesFacadeSingleton cHcFC;
-    private List<Country> countryList;
-    private List<City> citiesList;
-    private EditText cityText;
-    private EditText countryText;
-    private TextView textArea;
-    private TextView cityArea;
-    private TextView countryArea;
+
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_user_activity);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
 
-        cHcFC = CitiesHasCountriesFacadeSingleton.getOurInstance();
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawerLayout, toolbar,R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
-//        cityText = (EditText) findViewById(R.id.txCity);
-//        countryText = (EditText) findViewById(R.id.txCountry);
-//        textArea = (TextView) findViewById(R.id.txArea);
-//        cityArea = (TextView) findViewById(R.id.tvCities);
-//        countryArea = (TextView) findViewById(R.id.tvCountries);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        cHcFC = CitiesHasCountriesFacadeSingleton.getOurInstance();//
+
+        ListView listView = (ListView) findViewById(R.id.listCountries);
+
+//        try {
+//            List<Country> countries = cHcFC.getAllCountries();
+//            final CountryAdapter adapter = new CountryAdapter(getBaseContext(),
+//                    R.layout.country_model, countries);
+//            listView.setAdapter(adapter);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+
+        String[] names = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
+                "Костя", "Игорь", "Анна", "Денис", "Андрей" };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, names);
+        listView.setAdapter(adapter);
 
     }
 
@@ -55,81 +72,22 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void addCity(View v) throws IOException {
-        if(citiesList==null){
-            citiesList = new ArrayList<>();
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id==R.id.nav_cityList){
+            Intent intent = new Intent(getBaseContext(),CityActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(id==R.id.nav_searching){
+            Intent intent = new Intent(getBaseContext(),SearchingActivity.class);
+            startActivity(intent);
+            finish();
         }
-        if(cityText.getText().length()==0){
-            LogWriter logwriter = new LogWriter("Add City Error");
-            logwriter.write("Area for Cities Titles is Empty");
-            return;
-        }
-        City city = new City();
-        city.setTitle(cityText.getText().toString());
-        citiesList.add(city);
-        cityArea.setText(citiesList.toString());
-    }
-
-    public void addCountry(View v) throws IOException {
-        if(countryList==null){
-            countryList = new ArrayList<>();
-        }
-        if(countryText.getText().length()==0){
-            LogWriter logwriter = new LogWriter("Add Country Error");
-            logwriter.write("Area for Countries Titles is Empty");
-            return;
-        }
-        Country country = new Country();
-        country.setTitle(countryText.getText().toString());
-        countryList.add(country);
-        countryArea.setText(countryList.toString());
-    }
-
-    public void saveData(View v) throws IOException, SQLException {
-        if(countryList==null||citiesList==null){
-            LogWriter logwriter = new LogWriter("Persist Data Error");
-            logwriter.write("Countries or Cities List is empty");
-            return;
-        }
-        cHcFC.persisitData(citiesList,countryList);
-        Log.i("SavedData", "saveData: "+cHcFC.getAllCities().toString());
-        Log.i("SavedData", "saveData: "+cHcFC.getAllCountries().toString());
-        showTables();
-    }
-
-    public void showData(View v) throws SQLException {
-        Log.i("ShowData", "show data");
-        Log.i("ShowData", "showData: "+cHcFC.getAllCities().toString());
-        Log.i("ShowData", "showData: "+cHcFC.getAllCountries().toString());
-        showTables();
-
-    }
-
-    public void log(View v){
-        Log.i("Log", "Log from button");
-    }
-
-    private void showTables() throws SQLException {
-        String toAreaStr = "Output";
-        toAreaStr=toAreaStr.concat(" : ");
-        List<Country> countryList = cHcFC.getAllCountries();
-        List<City> cityList;
-        for(Country country:countryList){
-            cityList = cHcFC.lookupCitiesForCoutries(country);
-            if(cityList!=null) {
-                toAreaStr=toAreaStr.concat(country.getTitle() + " [" + cityList.toString()+" ]");
-            }else{
-                toAreaStr="DataBase is Empty";
-            }
-            toAreaStr=toAreaStr.concat("\n");
-        }
-        textArea.setText(toAreaStr);
-        Log.i("DataBase content",toAreaStr.toString());
-    }
-
-    public void clear(View view) throws SQLException {
-        cHcFC.clearAllTables();
-        Log.i("Cleaning", "currentData: "+cHcFC.getAllCities().toString());
-        Log.i("Cleaning", "currentData: "+cHcFC.getAllCountries().toString());
+        return true;
     }
 }

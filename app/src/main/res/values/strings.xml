@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Sqlite_Example</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="hello">Hello</string>
     <string name="city">City</string>
     <string name="country">County</string>
@@ -9,4 +13,7 @@
     <string name="show">Show Data</string>
     <string name="log">Log</string>
     <string name="Clear">Clear</string>
+    <string name="searching">Searching</string>
+    <string name="citiesList">Cities</string>
+    <string name="countryList">Countries</string>
 </resources>
