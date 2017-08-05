@@ -16,17 +16,16 @@ import com.smitsworks.redlo.sqlite_example.model.DataPoint;
 
 import java.util.List;
 
-import static android.R.attr.resource;
 
 /**
  * Created by redlo on 05.08.2017.
  */
 
 public class IncludeAdapter extends ArrayAdapter<DataPoint> {
-    private List<DataPoint> items;
+    private List<? extends DataPoint> items;
 
-    public IncludeAdapter(@NonNull Context context, List<DataPoint> items) {
-        super(context, R.layout.include_model);
+    public IncludeAdapter(@NonNull Context context, List<? extends DataPoint> items) {
+        super(context, R.layout.include_model,(List<DataPoint>) items);
         this.items=items;
     }
 

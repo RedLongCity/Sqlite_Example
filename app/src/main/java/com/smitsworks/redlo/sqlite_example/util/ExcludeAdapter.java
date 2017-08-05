@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.smitsworks.redlo.sqlite_example.R;
-import com.smitsworks.redlo.sqlite_example.model.Country;
 import com.smitsworks.redlo.sqlite_example.model.DataPoint;
 
 import java.util.List;
