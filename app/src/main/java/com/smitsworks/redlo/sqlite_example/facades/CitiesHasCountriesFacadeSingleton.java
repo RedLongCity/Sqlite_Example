@@ -9,6 +9,7 @@ import com.j256.ormlite.stmt.SelectArg;
 import com.smitsworks.redlo.sqlite_example.model.CitiesHasCountries;
 import com.smitsworks.redlo.sqlite_example.model.City;
 import com.smitsworks.redlo.sqlite_example.model.Country;
+import com.smitsworks.redlo.sqlite_example.model.DataPoint;
 import com.smitsworks.redlo.sqlite_example.util.DataBaseHelper;
 import com.smitsworks.redlo.sqlite_example.util.MyApp;
 

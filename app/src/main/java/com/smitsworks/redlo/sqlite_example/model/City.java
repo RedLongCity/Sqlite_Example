@@ -11,7 +11,7 @@ import java.util.Collection;
  * Created by redlongcity on 19.06.2017.
  */
 @DatabaseTable(tableName = "Cities")
-public class City implements Serializable {
+public class City implements Serializable,DataPoint {
 
     private static final long serialVersionUID = -7874823823497497357L;
 

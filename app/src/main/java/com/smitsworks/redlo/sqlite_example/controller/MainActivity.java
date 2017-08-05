@@ -15,9 +15,12 @@ import android.widget.ListView;
 import com.smitsworks.redlo.sqlite_example.R;
 import com.smitsworks.redlo.sqlite_example.facades.CitiesHasCountriesFacadeSingleton;
 import com.smitsworks.redlo.sqlite_example.model.Country;
+import com.smitsworks.redlo.sqlite_example.model.DataPoint;
 import com.smitsworks.redlo.sqlite_example.util.CountryAdapter;
+import com.smitsworks.redlo.sqlite_example.util.ExcludeAdapter;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_user_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -49,21 +52,17 @@ public class MainActivity extends AppCompatActivity
 
         ListView listView = (ListView) findViewById(R.id.listCountries);
 
-//        try {
-//            List<Country> countries = cHcFC.getAllCountries();
-//            final CountryAdapter adapter = new CountryAdapter(getBaseContext(),
-//                    R.layout.country_model, countries);
-//            listView.setAdapter(adapter);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            List<Country> countries = cHcFC.getAllCountries();
+            ExcludeAdapter adapter = new ExcludeAdapter(getBaseContext(), countries);
+            listView.setAdapter(adapter);
 
-        String[] names = { "Иван", "Марья", "Петр", "Антон", "Даша", "Борис",
-                "Костя", "Игорь", "Анна", "Денис", "Андрей" };
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, names);
-        listView.setAdapter(adapter);
+
+
 
     }
 

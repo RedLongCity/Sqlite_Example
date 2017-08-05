@@ -7,4 +7,6 @@
     <color name="txButton">#000000</color>
     <color name="greenButton">#105c21</color>
     <color name="greenTxColor">#dbf5e1</color>
+    <color name="backForCells">#54be6c</color>
+    <color name="backForInclude">#a6d744</color>
 </resources>

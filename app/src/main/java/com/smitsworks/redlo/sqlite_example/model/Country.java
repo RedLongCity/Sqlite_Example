@@ -11,7 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 
 @DatabaseTable(tableName = "Countries")
-public class Country implements Serializable {
+public class Country implements Serializable,DataPoint {
 
     private static final long serialVersionUID = -6582623980712135028L;
 
