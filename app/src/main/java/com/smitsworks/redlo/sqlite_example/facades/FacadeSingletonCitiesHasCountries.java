@@ -9,7 +9,6 @@ import com.j256.ormlite.stmt.SelectArg;
 import com.smitsworks.redlo.sqlite_example.model.CitiesHasCountries;
 import com.smitsworks.redlo.sqlite_example.model.City;
 import com.smitsworks.redlo.sqlite_example.model.Country;
-import com.smitsworks.redlo.sqlite_example.model.DataPoint;
 import com.smitsworks.redlo.sqlite_example.util.DataBaseHelper;
 import com.smitsworks.redlo.sqlite_example.util.MyApp;
 
@@ -22,23 +21,23 @@ import java.util.List;
  * Created by redlongcity on 09.07.2017.
  */
 
-public class CitiesHasCountriesFacadeSingleton {
+public class FacadeSingletonCitiesHasCountries {
 
     private DataBaseHelper dataBaseHelper;
     private PreparedQuery<City> citiesForCountriesQuery;
     private PreparedQuery<Country> countriesForCitiesQuerry;
 
-    private static final CitiesHasCountriesFacadeSingleton ourInstance = new CitiesHasCountriesFacadeSingleton();
+    private static final FacadeSingletonCitiesHasCountries ourInstance = new FacadeSingletonCitiesHasCountries();
 
-    static CitiesHasCountriesFacadeSingleton getInstance(){
+    static FacadeSingletonCitiesHasCountries getInstance(){
         return ourInstance;
     }
 
-    public static CitiesHasCountriesFacadeSingleton getOurInstance(){
+    public static FacadeSingletonCitiesHasCountries getOurInstance(){
         return ourInstance;
     }
 
-    private CitiesHasCountriesFacadeSingleton(){
+    private FacadeSingletonCitiesHasCountries(){
         dataBaseHelper = new DataBaseHelper(MyApp.getContext());
         try{
 

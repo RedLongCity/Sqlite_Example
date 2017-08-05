@@ -9,24 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.smitsworks.redlo.sqlite_example.R;
-import com.smitsworks.redlo.sqlite_example.facades.CitiesHasCountriesFacadeSingleton;
+import com.smitsworks.redlo.sqlite_example.facades.FacadeAdapter;
+import com.smitsworks.redlo.sqlite_example.facades.FacadeSingletonCitiesHasCountries;
 import com.smitsworks.redlo.sqlite_example.model.Country;
-import com.smitsworks.redlo.sqlite_example.model.DataPoint;
-import com.smitsworks.redlo.sqlite_example.util.CountryAdapter;
 import com.smitsworks.redlo.sqlite_example.util.ExcludeAdapter;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    private CitiesHasCountriesFacadeSingleton cHcFC;
+    private FacadeSingletonCitiesHasCountries cHcFC;
 
 
 
@@ -48,13 +45,15 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        cHcFC = CitiesHasCountriesFacadeSingleton.getOurInstance();//
+        cHcFC = FacadeSingletonCitiesHasCountries.getOurInstance();//
 
         ListView listView = (ListView) findViewById(R.id.listCountries);
 
         try {
             List<Country> countries = cHcFC.getAllCountries();
-            ExcludeAdapter adapter = new ExcludeAdapter(getBaseContext(), countries);
+            //ExcludeAdapter adapter = new ExcludeAdapter(getBaseContext(), countries);
+            //IncludeAdapter adapter = new IncludeAdapter(getBaseContext(),countries);
+            FacadeAdapter adapter = new FacadeAdapter(getBaseContext(),countries);
             listView.setAdapter(adapter);
 
         } catch (SQLException e) {
