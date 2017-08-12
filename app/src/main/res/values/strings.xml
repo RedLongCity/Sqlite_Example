@@ -9,11 +9,15 @@
     <string name="country">County</string>
     <string name="add">Add Country</string>
     <string name="addCity">Add City</string>
-    <string name="save">Save Data</string>
+    <string name="saveData">Save Data</string>
+    <string name="save">Save</string>
     <string name="show">Show Data</string>
     <string name="log">Log</string>
     <string name="Clear">Clear</string>
     <string name="searching">Searching</string>
     <string name="citiesList">Cities</string>
     <string name="countryList">Countries</string>
+    <string name="cancel">Cancel</string>
+    <string name="change">Change</string>
+    <string name="delete">Delete</string>
 </resources>

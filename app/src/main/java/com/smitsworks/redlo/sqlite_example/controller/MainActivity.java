@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.smitsworks.redlo.sqlite_example.R;
@@ -24,9 +26,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private FacadeSingletonCitiesHasCountries cHcFC;
-
-
-
+    private List<Country> listCountries;
+    Intent it;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,24 +46,29 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        cHcFC = FacadeSingletonCitiesHasCountries.getOurInstance();//
+        cHcFC = FacadeSingletonCitiesHasCountries.getOurInstance();
 
         ListView listView = (ListView) findViewById(R.id.listCountries);
 
-        try {
-            List<Country> countries = cHcFC.getAllCountries();
-            //ExcludeAdapter adapter = new ExcludeAdapter(getBaseContext(), countries);
-            //IncludeAdapter adapter = new IncludeAdapter(getBaseContext(),countries);
-            FacadeAdapter adapter = new FacadeAdapter(getBaseContext(),countries);
-            listView.setAdapter(adapter);
 
+        try {
+            listCountries = cHcFC.getAllCountries();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        final FacadeAdapter adapter = new FacadeAdapter(getBaseContext(),listCountries);
+        listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
-
-
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Country country = (Country) adapter.getItem(position);
+                it = new Intent(getBaseContext(),AddActivity.class);
+                it.putExtra("country",country);
+                startActivity(it);
+            }
+        });
     }
 
     @Override

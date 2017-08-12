@@ -18,6 +18,7 @@ import java.util.List;
  */
 
 public class ExcludeAdapter extends ArrayAdapter<DataPoint> {
+
     private List<? extends DataPoint> items;
 
     public ExcludeAdapter(Context context, List<? extends DataPoint> items) {
