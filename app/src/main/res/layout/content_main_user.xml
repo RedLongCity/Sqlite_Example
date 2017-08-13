@@ -21,7 +21,9 @@
             android:textAlignment="center"
             android:textColor="@color/button"
             android:text="content main"
-            android:layout_marginLeft="15dp" />
+            android:layout_marginLeft="15dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
 
         <ListView
             android:id="@+id/listCountries"
@@ -37,7 +39,9 @@
             android:layout_height="20dp"
             android:textAlignment="center"
             android:textColor="@color/button"
-            android:text="content main"/>
+            android:text="content main"
+            android:focusable="false"
+            android:focusableInTouchMode="false"/>
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

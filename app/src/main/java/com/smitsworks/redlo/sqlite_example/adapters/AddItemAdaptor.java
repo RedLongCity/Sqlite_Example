@@ -1,4 +1,4 @@
-package com.smitsworks.redlo.sqlite_example.util;
+package com.smitsworks.redlo.sqlite_example.adapters;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
@@ -46,9 +46,11 @@ public class AddItemAdaptor extends ArrayAdapter<DataPoint> {
             ((TextView) view.findViewById(R.id.add_item_textView)).setText(dataPoint.getTitle());
             Button button1 = (Button)view.findViewById(R.id.add_item_button_change);
             button1.setTag(1,dataPoint);
+            button1.setTag(2,position);
             button1.setOnClickListener(onClickListener);
             Button button2 = (Button) view.findViewById(R.id.add_item_button_delete);
             button2.setTag(1,dataPoint);
+            button2.setTag(2,position);
             button2.setOnClickListener(onClickListener);
         }
         return super.getView(position, convertView, parent);

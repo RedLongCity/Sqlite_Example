@@ -17,7 +17,6 @@ import com.smitsworks.redlo.sqlite_example.R;
 import com.smitsworks.redlo.sqlite_example.facades.FacadeAdapter;
 import com.smitsworks.redlo.sqlite_example.facades.FacadeSingletonCitiesHasCountries;
 import com.smitsworks.redlo.sqlite_example.model.Country;
-import com.smitsworks.redlo.sqlite_example.util.ExcludeAdapter;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity
                 Country country = (Country) adapter.getItem(position);
                 it = new Intent(getBaseContext(),AddActivity.class);
                 it.putExtra("country",country);
-                startActivity(it);
+                startActivityForResult(it,0);
             }
         });
     }

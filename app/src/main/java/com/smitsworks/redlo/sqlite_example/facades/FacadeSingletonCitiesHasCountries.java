@@ -90,21 +90,33 @@ public class FacadeSingletonCitiesHasCountries {
         return dataBaseHelper.getCityDao().queryForAll();
     }
 
-    public void delete(DataPoint dataPoint) throws SQLException {
+    public Boolean delete(DataPoint dataPoint) {
         if (dataPoint instanceof Country) {
             Country country = (Country) dataPoint;
-            List<City> citiesList = lookupCitiesForCoutries(country);
-            List<CitiesHasCountries> citiesHasCountriesList = lookupCitiesHasCountriesForDataPoint(dataPoint);
-            dataBaseHelper.getCitiesHasCountriesDao().delete(citiesHasCountriesList);
-            dataBaseHelper.getCityDao().delete(citiesList);
-            dataBaseHelper.getCountryDao().delete(country);
+            try {
+                List<City> citiesList = lookupCitiesForCoutries(country);
+                List<CitiesHasCountries> citiesHasCountriesList = lookupCitiesHasCountriesForDataPoint(dataPoint);
+                dataBaseHelper.getCitiesHasCountriesDao().delete(citiesHasCountriesList);
+                dataBaseHelper.getCityDao().delete(citiesList);
+                dataBaseHelper.getCountryDao().delete(country);
+                return true;
+            }catch(SQLException e){
+                Log.e("delete", "delete: finished by exception"+e.toString());
+                return false;
+            }
         }else{
             City city = (City) dataPoint;
-            List<Country> countriesList = lookupCountriesForCities(city);
-            List<CitiesHasCountries> citiesHasCountriesList = lookupCitiesHasCountriesForDataPoint(dataPoint);
-            dataBaseHelper.getCitiesHasCountriesDao().delete(citiesHasCountriesList);
-            dataBaseHelper.getCountryDao().delete(countriesList);
-            dataBaseHelper.getCityDao().delete(city);
+            try {
+                List<Country> countriesList = lookupCountriesForCities(city);
+                List<CitiesHasCountries> citiesHasCountriesList = lookupCitiesHasCountriesForDataPoint(dataPoint);
+                dataBaseHelper.getCitiesHasCountriesDao().delete(citiesHasCountriesList);
+                dataBaseHelper.getCountryDao().delete(countriesList);
+                dataBaseHelper.getCityDao().delete(city);
+                return true;
+            }catch (SQLException e){
+                Log.e("delete", "delete: finished by exception"+e.toString());
+                return false;
+            }
         }
 
     }

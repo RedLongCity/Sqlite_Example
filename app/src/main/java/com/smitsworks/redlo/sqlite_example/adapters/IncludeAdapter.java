@@ -1,4 +1,4 @@
-package com.smitsworks.redlo.sqlite_example.util;
+package com.smitsworks.redlo.sqlite_example.adapters;
 
 import android.content.Context;
 import android.support.annotation.LayoutRes;
