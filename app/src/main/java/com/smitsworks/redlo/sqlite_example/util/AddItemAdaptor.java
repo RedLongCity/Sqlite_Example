@@ -44,10 +44,10 @@ public class AddItemAdaptor extends ArrayAdapter<DataPoint> {
         DataPoint dataPoint = items.get(position);
         if (dataPoint == null) {
             ((TextView) view.findViewById(R.id.add_item_textView)).setText(dataPoint.getTitle());
-            Button button1 = (Button)view.findViewById(R.id.add_item_button1);
+            Button button1 = (Button)view.findViewById(R.id.add_item_button_change);
             button1.setTag(1,dataPoint);
             button1.setOnClickListener(onClickListener);
-            Button button2 = (Button) view.findViewById(R.id.add_item_button2);
+            Button button2 = (Button) view.findViewById(R.id.add_item_button_delete);
             button2.setTag(1,dataPoint);
             button2.setOnClickListener(onClickListener);
         }
