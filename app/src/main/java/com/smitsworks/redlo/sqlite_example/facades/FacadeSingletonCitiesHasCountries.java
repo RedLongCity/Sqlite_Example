@@ -44,14 +44,14 @@ public class FacadeSingletonCitiesHasCountries {
         dataBaseHelper = new DataBaseHelper(MyApp.getContext());
         try{
 
-//            Country country = new Country();
-//            country.setTitle("England");
-//            City city = new City();
-//            city.setTitle("London");
-//            CitiesHasCountries citiesHasCountries = new CitiesHasCountries(city,country);
-//            dataBaseHelper.getCountryDao().create(country);
-//            dataBaseHelper.getCityDao().create(city);
-//            dataBaseHelper.getCitiesHasCountriesDao().create(citiesHasCountries);
+            Country country = new Country();
+            country.setTitle("England");
+            City city = new City();
+            city.setTitle("London");
+            CitiesHasCountries citiesHasCountries = new CitiesHasCountries(city,country);
+            dataBaseHelper.getCountryDao().create(country);
+            dataBaseHelper.getCityDao().create(city);
+            dataBaseHelper.getCitiesHasCountriesDao().create(citiesHasCountries);
             Log.d("DataBase test",dataBaseHelper.getCountryDao().queryForAll().toString());
             Log.d("DataBase test",dataBaseHelper.getCityDao().queryForAll().toString());
             Log.d("DataBase test",dataBaseHelper.getCitiesHasCountriesDao().queryForAll().toString());

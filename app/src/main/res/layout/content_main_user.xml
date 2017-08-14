@@ -7,23 +7,10 @@
     tools:context="com.smitsworks.redlo.sqlite_example.controller.MainActivity"
     tools:showIn="@layout/app_bar_main_user">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:weightSum="1">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="16dp"
-            android:textAlignment="center"
-            android:textColor="@color/button"
-            android:text="content main"
-            android:layout_marginLeft="15dp"
-            android:focusable="false"
-            android:focusableInTouchMode="false"/>
 
         <ListView
             android:id="@+id/listCountries"
@@ -34,14 +21,6 @@
             android:background="#efefef">
             
         </ListView>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:textAlignment="center"
-            android:textColor="@color/button"
-            android:text="content main"
-            android:focusable="false"
-            android:focusableInTouchMode="false"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
